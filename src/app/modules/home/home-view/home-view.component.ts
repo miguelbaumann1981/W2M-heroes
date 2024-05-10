@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
+import { HandleActionsDialogService } from 'src/app/services/handle-actions-dialog.service';
 import { HeroesService } from 'src/app/services/heroes.service';
 import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
 
@@ -16,10 +17,19 @@ export class HomeViewComponent implements OnInit {
   public selectedHero: HeroItemList;
   public results: number;
 
-  constructor( private heroesService: HeroesService ) {}
+  constructor( 
+    private heroesService: HeroesService,
+    private handleActionsDialog: HandleActionsDialogService
+   ) {}
 
   ngOnInit(): void {
     this.getAllHeroesFromService();
+
+    this.handleActionsDialog.confirmDialog$.subscribe(status => {
+      if (status) {
+        
+      }
+    });
   }
 
   private getAllHeroesFromService(): void {

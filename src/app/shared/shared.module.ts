@@ -15,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
     ],
     imports: [
       CommonModule,
-      MatButtonModule
+      MatButtonModule,
     ],
     exports: [
         W2mInputComponent,

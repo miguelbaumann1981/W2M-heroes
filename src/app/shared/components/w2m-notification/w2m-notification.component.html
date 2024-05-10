@@ -1,1 +1,17 @@
-<p>w2m-notification works!</p>
+<div class="notification">
+    <p class="notification__text">{{ notificationText }}</p>
+    
+    <div class="notification__actions">
+        <w2m-default-button 
+            [text]="'Confirm'" 
+            [mode]="'primary'" 
+            (click)="confirmAction()"
+        ></w2m-default-button>
+
+        <w2m-default-button 
+            [text]="'Cancel'" 
+            [mode]="'warn'" 
+            (click)="closeDialog()"
+        ></w2m-default-button>
+    </div>
+</div>
