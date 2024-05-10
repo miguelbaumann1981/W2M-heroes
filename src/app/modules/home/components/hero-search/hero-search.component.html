@@ -1,0 +1,18 @@
+<form class="hero-search" [formGroup]="searchForm">
+    <mat-form-field appearance="outline" >
+        <mat-label>{{ label }}</mat-label>
+        <input 
+            matInput 
+            formControlName="value" 
+            [placeholder]="placeholder" 
+            (input)="onSearchEvent()" 
+            (change)="onSearchEvent()">
+        <mat-icon matSuffix>{{ icon }}</mat-icon>
+    </mat-form-field>
+
+    <w2m-default-button
+        [text]="'Clear'"
+        [mode]="'primary'"
+        (click)="clearEvent.emit('')"
+    ></w2m-default-button>
+</form>

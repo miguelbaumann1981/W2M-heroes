@@ -1,0 +1,20 @@
+<div class="hero-item-list">
+    <div class="hero-item-list__info">
+        <img [src]="heroItem.img" [alt]="heroItem.name + 'profile picture'">
+        <span class="hero-item-list__info--name">{{ heroItem.name }}</span>
+        <span class="hero-item-list__info--race">{{ heroItem.race }}</span>
+    </div>
+
+    <div class="hero-item-list__actions">
+        <w2m-default-button
+            [text]="'Edit'"
+            [mode]="'primary'"
+            (click)="editHeroEvent.emit(heroItem)"
+        ></w2m-default-button>
+        <w2m-default-button
+            [text]="'Delete'"
+            [mode]="'warn'"
+            (click)="deleteHeroEvent.emit(heroItem)"
+        ></w2m-default-button>
+    </div>
+</div>

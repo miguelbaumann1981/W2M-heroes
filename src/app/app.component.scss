@@ -1,0 +1,18 @@
+.app-container {
+    mat-drawer-container, mat-drawer {
+        height: 90vh;
+        color: #2a2a2a;
+    }
+    mat-drawer-container {
+        // background-color: #f5f2f2;
+        main {
+            padding: 20px;
+        }
+    }
+    mat-drawer {
+        background-color: #696767;
+        width: 200px;
+        height: 100%;
+        border-right: 1px solid lightcoral;
+      }
+}

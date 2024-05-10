@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RoutePaths } from './shared/enums/Routes';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'W2M-heroes';
+  public titleApp: string = 'W2M Heroes';
+  public navigationMenu: any[] = [
+    {
+      link: 'Home',
+      url: RoutePaths.HOME,
+      isActive: true
+    },
+    {
+      link: 'Details',
+      url: RoutePaths.DETAILS,
+      isActive: false
+    }
+  ];
+
 }
