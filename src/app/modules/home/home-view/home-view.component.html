@@ -4,9 +4,10 @@
         (searchEvent)="onSearch($event)"
         (clearEvent)="onClear($event)"
         ></hero-search>
-    
-        <p class="home-view__search--results"><span>{{ results }}</span> results</p>
     </div>
+
+    <p class="home-view__results"><span>{{ results }}</span> results</p>
+
     <ul>
         <li *ngFor="let hero of heroesListFiltered">
             <hero-item-list

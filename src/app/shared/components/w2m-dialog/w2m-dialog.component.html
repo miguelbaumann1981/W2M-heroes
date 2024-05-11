@@ -1,0 +1,17 @@
+<div class="dialog">
+    <p class="dialog__text">{{ dialogText }} {{ heroStored.name }}?</p>
+    
+    <div class="dialog__actions">
+        <w2m-default-button 
+            [text]="'Confirm'" 
+            [mode]="'primary'" 
+            (click)="confirmAction(heroStored)"
+        ></w2m-default-button>
+
+        <w2m-default-button 
+            [text]="'Cancel'" 
+            [mode]="'warn'" 
+            (click)="closeDialog()"
+        ></w2m-default-button>
+    </div>
+</div>

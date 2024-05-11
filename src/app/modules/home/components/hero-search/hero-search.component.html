@@ -5,14 +5,12 @@
             matInput 
             formControlName="value" 
             [placeholder]="placeholder" 
-            (input)="onSearchEvent()" 
-            (change)="onSearchEvent()">
+            (keyenter)="onSearchEvent()">
         <mat-icon matSuffix>{{ icon }}</mat-icon>
     </mat-form-field>
 
-    <w2m-default-button
-        [text]="'Clear'"
-        [mode]="'primary'"
-        (click)="clearEvent.emit('')"
-    ></w2m-default-button>
+    <div class="hero-search__actions">
+        <button mat-stroked-button (click)="onSearchEvent()">Search</button>
+        <button mat-stroked-button color="warn" (click)="onClear()">Clear</button>
+    </div>
 </form>

@@ -1,0 +1,17 @@
+.dialog {
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2rem;
+    &__text {
+        color: #fff;
+        font-size: 1.2rem;
+    }
+    &__actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        width: 100%;
+    }
+}

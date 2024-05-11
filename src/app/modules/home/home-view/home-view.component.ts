@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { HandleActionsDialogService } from 'src/app/services/handle-actions-dialog.service';
 import { HeroesService } from 'src/app/services/heroes.service';
@@ -9,13 +9,14 @@ import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
   templateUrl: './home-view.component.html',
   styleUrls: ['./home-view.component.scss']
 })
-export class HomeViewComponent implements OnInit {
+export class HomeViewComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
   public heroesList: HeroItemList[] = [];
   public heroesListFiltered: HeroItemList[] = [];
   public selectedHero: HeroItemList;
   public results: number;
+  public heroStored: HeroItemList;
 
   constructor( 
     private heroesService: HeroesService,
@@ -24,12 +25,6 @@ export class HomeViewComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllHeroesFromService();
-
-    this.handleActionsDialog.confirmDialog$.subscribe(status => {
-      if (status) {
-        
-      }
-    });
   }
 
   private getAllHeroesFromService(): void {
@@ -45,8 +40,10 @@ export class HomeViewComponent implements OnInit {
         }
       });
       this.results = this.heroesList.length;
+
       if (this.heroesListFiltered.length === 0) {
         this.heroesListFiltered = this.heroesList;
+        this.results = this.heroesListFiltered.length;
       }
     });
   }
@@ -74,7 +71,7 @@ export class HomeViewComponent implements OnInit {
 
   }
 
-  public removeObjectWithId(arr, id): void {
+  public removeHeroById(arr, id): void {
     const objWithIdIndex = arr.findIndex((obj) => obj.id === id);
     arr.splice(objWithIdIndex, 1);
     return arr;
@@ -82,8 +79,12 @@ export class HomeViewComponent implements OnInit {
 
   public onDeleteHero(hero: HeroItemList): void {
     console.log(hero);
-    this.removeObjectWithId(this.heroesListFiltered, hero.id);
+    this.removeHeroById(this.heroesListFiltered, hero?.id);
     this.results = this.heroesListFiltered.length;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(undefined);
   }
 
 }

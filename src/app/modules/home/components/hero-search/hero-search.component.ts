@@ -28,6 +28,11 @@ export class HeroSearchComponent {
     this.searchEvent.emit(this.searchForm.controls['value'].value);
   }
 
+  public onClear(): void {
+    this.clearEvent.emit('');
+    this.searchForm.reset();
+  }
+
   
 
 }
