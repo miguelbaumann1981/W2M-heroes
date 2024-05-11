@@ -1,21 +1,39 @@
 <section class="home-view">
     <div class="home-view__search">
         <hero-search
-        (searchEvent)="onSearch($event)"
-        (clearEvent)="onClear($event)"
+            (searchEvent)="onSearch($event)"
+            (clearEvent)="onClear($event)"
         ></hero-search>
+
+        <w2m-default-button
+            [text]="'Create hero'"
+            [mode]="'accent'"
+            (click)="createHero()"
+        ></w2m-default-button>
     </div>
 
-    <p class="home-view__results"><span>{{ results }}</span> results</p>
 
-    <ul>
-        <li *ngFor="let hero of heroesListFiltered">
-            <hero-item-list
-                [heroItem]="hero"
-                (editHeroEvent)="onEditHero($event)"
-                (deleteHeroEvent)="onDeleteHero($event)"
-            ></hero-item-list>
-        </li>
-    </ul>
+    <div *ngIf="isSpinnerEnabled" class="home-view__spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+    <ng-container *ngIf="!isSpinnerEnabled">
+        <w2m-notification
+            [notificationText]="'There are no heroes to show. Please try again.'"
+            [type]="'info'"
+        ></w2m-notification>
+        <p class="home-view__results"><span>{{ results }}</span> heroes</p>
+    
+        <ul class="home-view__list">
+            <li *ngFor="let hero of heroesListFiltered">
+                <hero-item-list
+                    [heroItem]="hero"
+                    (editHeroEvent)="onEditHero($event)"
+                    (deleteHeroEvent)="onDeleteHero($event)"
+                ></hero-item-list>
+            </li>
+        </ul>
+
+    </ng-container>
+
         
 </section>

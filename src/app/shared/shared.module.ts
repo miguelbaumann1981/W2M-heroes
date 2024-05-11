@@ -6,6 +6,7 @@ import { W2mSpinnerComponent } from './components/w2m-spinner/w2m-spinner.compon
 import { W2mDefaultButtonComponent } from './components/w2m-default-button/w2m-default-button.component';
 import { MatButtonModule } from '@angular/material/button';
 import { W2mDialogComponent } from './components/w2m-dialog/w2m-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { W2mDialogComponent } from './components/w2m-dialog/w2m-dialog.component
     imports: [
       CommonModule,
       MatButtonModule,
+      MatProgressSpinnerModule
     ],
     exports: [
         W2mInputComponent,

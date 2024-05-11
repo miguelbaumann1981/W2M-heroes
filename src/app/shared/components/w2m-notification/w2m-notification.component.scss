@@ -1,17 +1,23 @@
 .notification {
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.25rem;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     gap: 2rem;
-    &__text {
-        color: #fff;
-        font-size: 1.2rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    &.success {
+        background-color: lightgreen;
+        color: green;
     }
-    &__actions {
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-        width: 100%;
+    &.error {
+        background-color: lightcoral;
+        color: red;
     }
+    &.info {
+        background-color: lightblue;
+        color: blue;
+    }
+
 }

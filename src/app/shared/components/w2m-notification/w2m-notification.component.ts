@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { HandleActionsDialogService } from 'src/app/services/handle-actions-dialog.service';
+
+type Status = 'success' | 'error' | 'info';
 
 @Component({
   selector: 'w2m-notification',
@@ -9,21 +9,27 @@ import { HandleActionsDialogService } from 'src/app/services/handle-actions-dial
 })
 export class W2mNotificationComponent {
 
-  @Input() public notificationText: string = 'Are you sure?';
+  @Input() public notificationText: string = 'Notification';
+  @Input() public type: Status = 'info';
+
+  @Output() public closeEvent: EventEmitter<void> = new EventEmitter<void>();
 
 
-  constructor(
-    public dialogRef: MatDialogRef<W2mNotificationComponent>, 
-    private handleActionsDialog: HandleActionsDialogService
-  ) { }
+  constructor() { }
 
-  closeDialog() {
-    this.dialogRef.close();
-  }
 
-  public confirmAction() {
-    this.handleActionsDialog.confirmDialog$.next(true);
-    this.closeDialog();
+
+  public setColorNotifiction(type: string): string {
+    switch (type) {
+      case 'success':
+        return 'success';
+      case 'error':
+        return 'error';
+      case 'info':
+        return 'info';
+      default:
+        return 'info';
+    }
   }
 
 }

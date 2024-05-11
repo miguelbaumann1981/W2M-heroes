@@ -17,6 +17,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   public selectedHero: HeroItemList;
   public results: number;
   public heroStored: HeroItemList;
+  public isSpinnerEnabled: boolean = false;
 
   constructor( 
     private heroesService: HeroesService,
@@ -28,24 +29,33 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   }
 
   private getAllHeroesFromService(): void {
+    this.isSpinnerEnabled = true;
     this.heroesService.getAllHeroes().pipe(takeUntil(this.destroy$))
-    .subscribe(response => {
-      console.log(response);
-      this.heroesList = response.map((item: any) => {
-        return {
-          id: item?.id,
-          name: item?.name,
-          race: item?.appearance?.race,
-          img: item?.images?.xs
+    .subscribe({
+      next: (response) => {
+        console.log(response);
+        this.heroesList = response.map((item: any) => {
+          return {
+            id: item?.id,
+            name: item?.name,
+            race: item?.appearance?.race,
+            img: item?.images?.xs
+          }
+        });
+        this.results = this.heroesList.length;
+  
+        if (this.heroesListFiltered.length === 0) {
+          this.heroesListFiltered = this.heroesList;
+          this.results = this.heroesListFiltered.length;
         }
-      });
-      this.results = this.heroesList.length;
-
-      if (this.heroesListFiltered.length === 0) {
-        this.heroesListFiltered = this.heroesList;
-        this.results = this.heroesListFiltered.length;
+      
+      },
+      error: () => {},
+      complete: () => {
+        this.isSpinnerEnabled = false;
       }
-    });
+    })
+      
   }
 
   public onSearch(value: string): void {
@@ -81,6 +91,10 @@ export class HomeViewComponent implements OnInit, OnDestroy {
     console.log(hero);
     this.removeHeroById(this.heroesListFiltered, hero?.id);
     this.results = this.heroesListFiltered.length;
+  }
+
+  public createHero(): void {
+
   }
 
   ngOnDestroy() {
