@@ -1,6 +1,8 @@
 <div class="notification" [ngClass]="setColorNotifiction(type)">
     <span>{{ notificationText }}</span>
     
-    <button mat-stroked-button (click)="closeEvent.emit()">Close</button>
+    <button mat-icon-button color="primary" (click)="closeEvent.emit()">
+        <mat-icon>close</mat-icon>
+      </button>
 
 </div>

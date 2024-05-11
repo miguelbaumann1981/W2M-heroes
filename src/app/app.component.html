@@ -9,7 +9,7 @@
 
 <div class="app-container">
   <mat-drawer-container autosize>
-    <mat-drawer #drawer mode="side" opened>
+    <mat-drawer #drawer mode="side" [opened]="false">
       <mat-nav-list>
         <a mat-list-item *ngFor="let item of navigationMenu" [activated]="item.isActive" [routerLink]="item.url">{{ item.link }}</a>
       </mat-nav-list>

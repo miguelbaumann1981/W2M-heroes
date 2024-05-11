@@ -1,0 +1,31 @@
+<div class="edit-hero-view">
+    <h1 class="edit-hero-view__title">Edit hero: </h1>
+
+    <form class="edit-hero-view__form" [formGroup]="editHeroForm">
+        <w2m-input
+            [label]="'Name'"
+            [placeholder]="'Enter a name'"
+            [control]="editHeroForm.controls['name']"
+        ></w2m-input>
+
+        <w2m-input
+            [label]="'Race'"
+            [placeholder]="'Enter a race'"
+            [control]="editHeroForm.controls['race']"
+        ></w2m-input>
+
+        <div class="edit-hero-view__form--actions">
+            <w2m-default-button
+                [text]="'Save'"
+                [mode]="'primary'"
+                (click)="saveHero()"
+            ></w2m-default-button>
+            
+            <w2m-default-button
+                [text]="'Cancel'"
+                [mode]="'warn'"
+                (click)="return()"
+            ></w2m-default-button>
+        </div>
+    </form>
+</div>

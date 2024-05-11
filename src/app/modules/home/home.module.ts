@@ -12,11 +12,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule } from '@angular/material/dialog';
+import { CreateHeroViewComponent } from './create-hero-view/create-hero-view.component';
+import { EditHeroViewComponent } from './edit-hero-view/edit-hero-view.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeViewComponent,
+  },
+  {
+    path: 'hero',
+    component: EditHeroViewComponent,
   }
 ];
 
@@ -24,7 +30,9 @@ const routes: Routes = [
   declarations: [
     HomeViewComponent,
     HeroItemListComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    CreateHeroViewComponent,
+    EditHeroViewComponent
   ],
   imports: [
     CommonModule,

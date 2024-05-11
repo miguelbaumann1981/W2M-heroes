@@ -1,23 +1,23 @@
 .notification {
-    padding: 1rem 1.25rem;
+    padding: 0.8rem 1rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
     border-radius: 0.5rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     &.success {
-        background-color: lightgreen;
-        color: green;
+        background-color: #d1ffd1;
+        color: #336433;
     }
     &.error {
-        background-color: lightcoral;
-        color: red;
+        background-color: #ffc5c5;
+        color: #e16f6f;
     }
     &.info {
-        background-color: lightblue;
-        color: blue;
+        background-color: #cfe5ec;
+        color: #7a7ae1;
     }
 
 }

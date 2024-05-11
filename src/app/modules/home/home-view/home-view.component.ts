@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { HandleActionsDialogService } from 'src/app/services/handle-actions-dialog.service';
+import { HandleEditHeroService } from 'src/app/services/handle-edit-hero.service';
 import { HeroesService } from 'src/app/services/heroes.service';
+import { RoutePaths } from 'src/app/shared/enums/Routes';
 import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
 
 @Component({
@@ -18,22 +20,33 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   public results: number;
   public heroStored: HeroItemList;
   public isSpinnerEnabled: boolean = false;
+  public isErrorService: boolean = false;
 
   constructor( 
     private heroesService: HeroesService,
-    private handleActionsDialog: HandleActionsDialogService
+    private handleEditHeroService: HandleEditHeroService,
+    private router: Router
    ) {}
 
   ngOnInit(): void {
     this.getAllHeroesFromService();
+
+    this.handleEditHeroService.getHeroEdited().subscribe((hero: HeroItemList) => {
+      if (hero !== undefined) {
+        this.handleEditHeroService.getHeroRemoved().subscribe((removed: HeroItemList) => {
+          if (removed !== undefined) {
+            this.getAllHeroesFromService(hero, removed);
+          }
+        });
+      }
+    });
   }
 
-  private getAllHeroesFromService(): void {
+  private getAllHeroesFromService(newHero?: HeroItemList, removeHero?: HeroItemList): void {
     this.isSpinnerEnabled = true;
     this.heroesService.getAllHeroes().pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response) => {
-        console.log(response);
         this.heroesList = response.map((item: any) => {
           return {
             id: item?.id,
@@ -44,15 +57,29 @@ export class HomeViewComponent implements OnInit, OnDestroy {
         });
         this.results = this.heroesList.length;
   
+        if (newHero && removeHero) {
+          this.heroesList.unshift(newHero);
+          this.removeHeroById(this.heroesList, removeHero?.id);
+          this.heroesListFiltered = this.heroesList;
+          this.heroesListFiltered.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+          this.results = this.heroesListFiltered.length;
+        }
+
         if (this.heroesListFiltered.length === 0) {
           this.heroesListFiltered = this.heroesList;
+          this.heroesListFiltered.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
           this.results = this.heroesListFiltered.length;
         }
       
       },
-      error: () => {},
+      error: () => {
+        this.isErrorService = true;
+      },
       complete: () => {
         this.isSpinnerEnabled = false;
+        setTimeout(() => {
+          this.isErrorService = false;
+        }, 3000);
       }
     })
       
@@ -78,7 +105,13 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   }
 
   public onEditHero(hero: HeroItemList): void {
-
+    this.handleEditHeroService.setHeroRemoved(hero);
+    this.router.navigate([RoutePaths.HOME + '/hero'], 
+      {
+        queryParams: 
+          { id: hero?.id }
+      }
+    );
   }
 
   public removeHeroById(arr, id): void {
@@ -94,7 +127,14 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   }
 
   public createHero(): void {
+    // this.router.navigate([RoutePaths.HOME + '/hero/1']);
+  }
 
+  public onCloseNotification(): void {
+    if (this.isErrorService) {
+      this.isErrorService = false;
+    }
+    this.getAllHeroesFromService();
   }
 
   ngOnDestroy() {

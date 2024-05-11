@@ -1,0 +1,19 @@
+.edit-hero-view {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    &__title {
+        color: lightcoral;
+    }
+    &__form {
+        display: flex;
+        flex-direction: column;
+        grid-area: 20px;
+        width: 50%;
+        &--actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+    }
+}

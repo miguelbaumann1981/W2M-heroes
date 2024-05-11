@@ -18,10 +18,20 @@
     </div>
     <ng-container *ngIf="!isSpinnerEnabled">
         <w2m-notification
+            *ngIf="heroesListFiltered.length === 0"
             [notificationText]="'There are no heroes to show. Please try again.'"
             [type]="'info'"
+            (closeEvent)="onCloseNotification()"
         ></w2m-notification>
-        <p class="home-view__results"><span>{{ results }}</span> heroes</p>
+
+        <w2m-notification
+            *ngIf="isErrorService"
+            [notificationText]="'Service error. Please try later'"
+            [type]="'error'"
+            (closeEvent)="onCloseNotification()"
+        ></w2m-notification>
+
+        <p *ngIf="heroesListFiltered.length > 0" class="home-view__results"><span>{{ results }}</span> {{ results === 1 ? 'hero' : 'heroes' }}</p>
     
         <ul class="home-view__list">
             <li *ngFor="let hero of heroesListFiltered">
@@ -32,8 +42,5 @@
                 ></hero-item-list>
             </li>
         </ul>
-
     </ng-container>
-
-        
 </section>

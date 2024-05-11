@@ -11,8 +11,14 @@ export class HeroesService {
 
   constructor( private http: HttpClient ) { }
 
-  getAllHeroes(): Observable<any>{
-    return this.http.get<any[]>(`${this.baseUrl}/all.json`);
+  getAllHeroes(): Observable<any[]>{
+    const url: string = `${this.baseUrl}/all.json`;
+    return this.http.get<any[]>(url);
+  }
+
+  getHeroById(id: string): Observable<any>{
+    const url: string = `${this.baseUrl}/id/${id}.json`;
+    return this.http.get<any[]>(url);
   }
   
 

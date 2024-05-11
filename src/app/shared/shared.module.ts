@@ -7,6 +7,10 @@ import { W2mDefaultButtonComponent } from './components/w2m-default-button/w2m-d
 import { MatButtonModule } from '@angular/material/button';
 import { W2mDialogComponent } from './components/w2m-dialog/w2m-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     declarations: [
@@ -19,7 +23,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     imports: [
       CommonModule,
       MatButtonModule,
-      MatProgressSpinnerModule
+      MatProgressSpinnerModule,
+      MatIconModule,
+      MatFormFieldModule,
+      MatInputModule,
+      FormsModule,
+      ReactiveFormsModule
     ],
     exports: [
         W2mInputComponent,
