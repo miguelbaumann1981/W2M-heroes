@@ -1,0 +1,25 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img [src]="heroCard?.imgProfile" [alt]="heroCard?.name + 'photo'">
+      </div>
+      <mat-card-title>heroCard?.name</mat-card-title>
+      <mat-card-subtitle>heroCard?.alias</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="heroCard?.imgLarge" [alt]="heroCard?.name + 'photo'">
+    <mat-card-content>
+      <ul>
+        <li>Intelligence: <span>heroCard?.powers?.intelligence</span></li>
+        <li>Strength: <span>heroCard?.powers?.strength</span></li>
+        <li>Speed: <span>heroCard?.powers?.speed</span></li>
+        <li>Durability: <span>heroCard?.powers?.durability</span></li>
+        <li>Power: <span>heroCard?.powers?.power</span></li>
+        <li>Combat: <span>heroCard?.powers?.combat</span></li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
+  

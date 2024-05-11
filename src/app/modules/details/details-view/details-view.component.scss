@@ -1,0 +1,21 @@
+.details {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    &__title {
+        color: #fff;
+    }
+    mat-grid-tile {
+        background: lightblue;
+      }
+      &__cards {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        &--container {
+            width: 24%;
+        }
+      }
+}
