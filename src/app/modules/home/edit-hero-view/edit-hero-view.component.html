@@ -1,5 +1,5 @@
 <div class="edit-hero-view">
-    <h1 class="edit-hero-view__title">Edit hero: </h1>
+    <h1 class="edit-hero-view__title">Edit hero: <span>{{ editedHero?.name }}</span></h1>
 
     <form class="edit-hero-view__form" [formGroup]="editHeroForm">
         <w2m-input
@@ -18,6 +18,7 @@
             <w2m-default-button
                 [text]="'Save'"
                 [mode]="'primary'"
+                [isDisabled]="editHeroForm.invalid"
                 (click)="saveHero()"
             ></w2m-default-button>
             

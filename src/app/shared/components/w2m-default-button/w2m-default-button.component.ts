@@ -11,5 +11,6 @@ export class W2mDefaultButtonComponent {
 
   @Input() public text: string = '';
   @Input() public mode: Mode = 'primary';
+  @Input() public isDisabled: boolean = false;
 
 }

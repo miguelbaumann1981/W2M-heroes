@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'hero',
     component: EditHeroViewComponent,
+  },
+  {
+    path: 'createHero',
+    component: CreateHeroViewComponent,
   }
 ];
 

@@ -36,6 +36,8 @@ export class HomeViewComponent implements OnInit, OnDestroy {
         this.handleEditHeroService.getHeroRemoved().subscribe((removed: HeroItemList) => {
           if (removed !== undefined) {
             this.getAllHeroesFromService(hero, removed);
+          } else {
+            this.getAllHeroesFromService(hero);
           }
         });
       }
@@ -56,6 +58,13 @@ export class HomeViewComponent implements OnInit, OnDestroy {
           }
         });
         this.results = this.heroesList.length;
+
+        if (newHero && !removeHero) {
+          this.heroesList.unshift(newHero);
+          this.heroesListFiltered = this.heroesList;
+          this.heroesListFiltered.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+          this.results = this.heroesListFiltered.length;
+        }
   
         if (newHero && removeHero) {
           this.heroesList.unshift(newHero);
@@ -127,7 +136,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   }
 
   public createHero(): void {
-    // this.router.navigate([RoutePaths.HOME + '/hero/1']);
+    this.router.navigate([RoutePaths.HOME + '/createHero']);
   }
 
   public onCloseNotification(): void {
