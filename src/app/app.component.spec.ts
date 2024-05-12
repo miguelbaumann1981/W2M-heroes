@@ -23,13 +23,6 @@ describe('AppComponent', () => {
   it(`should have as title 'W2M-heroes'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('W2M-heroes');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('W2M-heroes app is running!');
+    expect(app.titleApp).toEqual('W2M Heroes');
   });
 });

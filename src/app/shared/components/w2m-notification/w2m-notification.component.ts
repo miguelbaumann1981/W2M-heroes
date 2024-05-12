@@ -24,9 +24,10 @@ export class W2mNotificationComponent implements OnInit {
     }
   }
 
-
-
-  public setColorNotifiction(type: string): string {
+  /*
+  * Method to set the styles by type
+  */
+  public setColorNotification(type: string): string {
     switch (type) {
       case 'success':
         return 'success';
