@@ -21,6 +21,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   public isSpinnerEnabled: boolean = false;
   public isErrorService: boolean = false;
   public isNotificationShown: boolean = false;
+  public notificationText: string = '';
 
   constructor( 
     private heroesService: HeroesService,
@@ -37,6 +38,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
    * Method to evaluate if hero has been edited
    */
   private handleEditionHero(): void {
+    this.isNotificationShown = false;
     this.handleEditHeroService.getHeroEdited().subscribe((hero: HeroItemList) => {
       if (hero !== undefined) {
         this.handleEditHeroService.getHeroRemoved().subscribe((removed: HeroItemList) => {
@@ -57,6 +59,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
    */
   private getAllHeroesFromService(newHero?: HeroItemList, removeHero?: HeroItemList): void {
     this.isSpinnerEnabled = true;
+    this.isNotificationShown = false;
     this.heroesService.getAllHeroes().pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response: Hero[]) => {
@@ -71,6 +74,8 @@ export class HomeViewComponent implements OnInit, OnDestroy {
         this.results = this.heroesList.length;
 
         if (newHero && !removeHero) {
+          this.isNotificationShown = true;
+          this.notificationText = 'New hero has been created successfully';
           this.heroesList.unshift(newHero);
           this.heroesListFiltered = this.heroesList;
           this.heroesListFiltered.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
@@ -78,6 +83,8 @@ export class HomeViewComponent implements OnInit, OnDestroy {
         }
   
         if (newHero && removeHero) {
+          this.isNotificationShown = true;
+          this.notificationText = 'The hero has been edited successfully';
           this.heroesList.unshift(newHero);
           this.removeHeroById(this.heroesList, removeHero?.id);
           this.heroesListFiltered = this.heroesList;
@@ -175,6 +182,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
     this.removeHeroById(this.heroesListFiltered, hero?.id);
     this.results = this.heroesListFiltered.length;
     this.isNotificationShown = true;
+    this.notificationText = 'The hero has been deleted successfully';
   }
 
   /**
@@ -194,6 +202,9 @@ export class HomeViewComponent implements OnInit, OnDestroy {
     this.getAllHeroesFromService();
   }
 
+  /**
+   * Method to hide the notification component
+   */
   public hideNotification(): void {
     this.isNotificationShown = true;
     setTimeout(() => {

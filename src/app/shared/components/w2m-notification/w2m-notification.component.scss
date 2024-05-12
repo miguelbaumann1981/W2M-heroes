@@ -5,8 +5,12 @@
     justify-content: space-between;
     align-items: center;
     gap: 2rem;
-    border-radius: 0.5rem;
-    font-size: 0.9rem;
+    border-radius: 4px;
+    &__text {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
     &.success {
         background-color: #d1ffd1;
         color: #336433;

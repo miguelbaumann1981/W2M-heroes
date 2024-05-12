@@ -41,31 +41,31 @@
         <!-- endregion -->
         
         <!-- region RESULTS -->
-        <p *ngIf="heroesListFiltered.length > 0" class="home-view__results"><span>{{ results }}</span> {{ results === 1 ? 'hero' : 'heroes' }}</p>
+        <div class="home-view__results">
+            <p *ngIf="heroesListFiltered.length > 0" class="home-view__results--text"><span>{{ results }}</span> {{ results === 1 ? 'hero' : 'heroes' }}</p>
+            <div *ngIf="isNotificationShown" class="home-view__results--notification">
+                <w2m-notification
+                    [notificationText]="notificationText"
+                    [type]="'success'"
+                    (closeEvent)="hideNotification()"
+                ></w2m-notification>
+            </div>
+        </div>
         <!-- endregion -->
 
         
-        <div class="home-view__list">
-            <!-- region HEROES LIST -->
-            <ul>
-                <li *ngFor="let hero of heroesListFiltered">
-                    <hero-item-list
-                        [heroItem]="hero"
-                        (editHeroEvent)="onEditHero($event)"
-                        (seeDetailHeroEvent)="seeDetailHero($event)"
-                        (deleteHeroEvent)="onDeleteHero($event)"
-                    ></hero-item-list>
-                </li>
-            </ul>
-            <div class="home-view__list--notification">
-                <w2m-notification
-                *ngIf="isNotificationShown"
-                [notificationText]="'Service error...'"
-                [type]="'error'"
-                (closeEvent)="hideNotification()"
-            ></w2m-notification>
-            </div>
-        </div>
+        <!-- region HEROES LIST -->
+        <ul class="home-view__list">
+            <li *ngFor="let hero of heroesListFiltered">
+                <hero-item-list
+                    [heroItem]="hero"
+                    (editHeroEvent)="onEditHero($event)"
+                    (seeDetailHeroEvent)="seeDetailHero($event)"
+                    (deleteHeroEvent)="onDeleteHero($event)"
+                ></hero-item-list>
+            </li>
+        </ul>
+            
         <!-- endregion -->
     </ng-container>
 </section>
