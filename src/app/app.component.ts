@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { RoutePaths } from './shared/enums/Routes';
 
+interface MenuItem {
+  link: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,16 +13,14 @@ import { RoutePaths } from './shared/enums/Routes';
 })
 export class AppComponent {
   public titleApp: string = 'W2M Heroes';
-  public navigationMenu: any[] = [
+  public navigationMenu: MenuItem[] = [
     {
       link: 'Home',
-      url: RoutePaths.HOME,
-      isActive: true
+      url: RoutePaths.HOME
     },
     {
       link: 'Details',
-      url: RoutePaths.DETAILS,
-      isActive: false
+      url: RoutePaths.DETAILS
     }
   ];
 

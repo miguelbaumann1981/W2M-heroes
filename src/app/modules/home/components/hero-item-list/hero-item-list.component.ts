@@ -9,23 +9,32 @@ import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
 export class HeroItemListComponent {
 
   @Input() public heroItem: HeroItemList;
-  @Input() public isHeroDeleted: boolean = false;
 
   @Output() public editHeroEvent: EventEmitter<HeroItemList> = new EventEmitter<HeroItemList>();
   @Output() public deleteHeroEvent: EventEmitter<HeroItemList> = new EventEmitter<HeroItemList>();
+  @Output() public seeDetailHeroEvent: EventEmitter<HeroItemList> = new EventEmitter<HeroItemList>();
 
   public isDeleteConfirmEnabled: boolean = false;
 
   constructor() {}
 
+  /**
+   * Method to show section delete confirmation
+   */
   public showConfirmation(): void {
     this.isDeleteConfirmEnabled = true;
   }
 
+  /**
+   * Method to emit confimation event
+   */
   public confirm(): void {
     this.deleteHeroEvent.emit(this.heroItem);
   }
 
+  /**
+   * Method to hide section delete confirmation
+   */
   public cancel(): void {
     this.isDeleteConfirmEnabled = false;
   }

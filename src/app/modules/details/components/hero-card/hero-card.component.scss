@@ -2,7 +2,7 @@ mat-card.hero-card {
     min-height: 260px;
     mat-card-title {
         color: lightcoral;
-        margin-bottom: 4px;
+        margin-bottom: 0.25rem;
     }
     mat-card-subtitle {
         color: lightgrey;
@@ -13,7 +13,7 @@ mat-card.hero-card {
         h3 {
             font-size: 1rem;
             color: lightblue;
-            margin: 10px 0;
+            margin: 0.6rem 0;
         }
         ul {
             list-style: none;

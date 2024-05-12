@@ -1,8 +1,8 @@
 <div class="notification" [ngClass]="setColorNotifiction(type)">
     <span>{{ notificationText }}</span>
     
-    <button mat-icon-button color="primary" (click)="closeEvent.emit()">
+    <button *ngIf="isCloseButton" mat-icon-button color="primary" (click)="closeEvent.emit()">
         <mat-icon>close</mat-icon>
-      </button>
+    </button>
 
 </div>

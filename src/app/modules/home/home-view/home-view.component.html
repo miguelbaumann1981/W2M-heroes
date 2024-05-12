@@ -1,4 +1,6 @@
 <section class="home-view">
+    
+    <!-- region SEARCH HERO -->
     <div class="home-view__search">
         <hero-search
             (searchEvent)="onSearch($event)"
@@ -11,16 +13,21 @@
             (click)="createHero()"
         ></w2m-default-button>
     </div>
+    <!-- endregion -->
 
-
+    <!-- region SPINNER -->
     <div *ngIf="isSpinnerEnabled" class="home-view__spinner">
         <mat-spinner></mat-spinner>
     </div>
+    <!-- endregion -->
+
     <ng-container *ngIf="!isSpinnerEnabled">
+        <!-- region NOTIFICATIONS -->
         <w2m-notification
             *ngIf="heroesListFiltered.length === 0"
             [notificationText]="'There are no heroes to show. Please try again.'"
             [type]="'info'"
+            [isCloseButton]="true"
             (closeEvent)="onCloseNotification()"
         ></w2m-notification>
 
@@ -28,19 +35,37 @@
             *ngIf="isErrorService"
             [notificationText]="'Service error. Please try later'"
             [type]="'error'"
+            [isCloseButton]="true"
             (closeEvent)="onCloseNotification()"
         ></w2m-notification>
-
+        <!-- endregion -->
+        
+        <!-- region RESULTS -->
         <p *ngIf="heroesListFiltered.length > 0" class="home-view__results"><span>{{ results }}</span> {{ results === 1 ? 'hero' : 'heroes' }}</p>
-    
-        <ul class="home-view__list">
-            <li *ngFor="let hero of heroesListFiltered">
-                <hero-item-list
-                    [heroItem]="hero"
-                    (editHeroEvent)="onEditHero($event)"
-                    (deleteHeroEvent)="onDeleteHero($event)"
-                ></hero-item-list>
-            </li>
-        </ul>
+        <!-- endregion -->
+
+        
+        <div class="home-view__list">
+            <!-- region HEROES LIST -->
+            <ul>
+                <li *ngFor="let hero of heroesListFiltered">
+                    <hero-item-list
+                        [heroItem]="hero"
+                        (editHeroEvent)="onEditHero($event)"
+                        (seeDetailHeroEvent)="seeDetailHero($event)"
+                        (deleteHeroEvent)="onDeleteHero($event)"
+                    ></hero-item-list>
+                </li>
+            </ul>
+            <div class="home-view__list--notification">
+                <w2m-notification
+                *ngIf="isNotificationShown"
+                [notificationText]="'Service error...'"
+                [type]="'error'"
+                (closeEvent)="hideNotification()"
+            ></w2m-notification>
+            </div>
+        </div>
+        <!-- endregion -->
     </ng-container>
 </section>

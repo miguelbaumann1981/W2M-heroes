@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 type Status = 'success' | 'error' | 'info';
 
@@ -7,15 +7,22 @@ type Status = 'success' | 'error' | 'info';
   templateUrl: './w2m-notification.component.html',
   styleUrls: ['./w2m-notification.component.scss']
 })
-export class W2mNotificationComponent {
+export class W2mNotificationComponent implements OnInit {
 
   @Input() public notificationText: string = 'Notification';
   @Input() public type: Status = 'info';
+  @Input() public isCloseButton: boolean = false;
 
   @Output() public closeEvent: EventEmitter<void> = new EventEmitter<void>();
 
 
   constructor() { }
+
+  ngOnInit(): void {
+    if (!this.isCloseButton) {
+      this.closeEvent.emit();
+    }
+  }
 
 
 

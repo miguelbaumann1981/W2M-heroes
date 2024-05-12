@@ -1,6 +1,7 @@
 <div class="details">
     <h1 class="details__title">Details Heroes</h1>
 
+    <!-- region SEARCH HERO -->
     <div class="details__form">
         <form class="hero-search" [formGroup]="searchForm">
             <mat-form-field appearance="outline" >
@@ -19,18 +20,25 @@
             </div>
         </form>
 
+        <!-- region RESULTS -->
         <p *ngIf="heroesCardsFiltered.length > 0" class="details__form--results"><span>{{ results }}</span> {{ results === 1 ? 'hero' : 'heroes' }}</p>
+        <!-- endregion -->
     </div>
+    <!-- endregion -->
 
+    <!-- region SPINNER -->
     <div *ngIf="isSpinnerEnabled" class="details__spinner">
         <mat-spinner></mat-spinner>
     </div>
+    <!-- endregion -->
 
     <ng-container *ngIf="!isSpinnerEnabled">
+        <!-- region NOTIFICATIONS -->
         <w2m-notification
             *ngIf="heroesCardsFiltered.length === 0"
             [notificationText]="'There are no heroes to show. Please try again.'"
             [type]="'info'"
+            [isCloseButton]="true"
             (closeEvent)="onCloseNotification()"
         ></w2m-notification>
 
@@ -38,14 +46,17 @@
             *ngIf="isErrorService"
             [notificationText]="'Service error. Please try later'"
             [type]="'error'"
+            [isCloseButton]="true"
             (closeEvent)="onCloseNotification()"
         ></w2m-notification>
+        <!-- endregion -->
 
+        <!-- region HEROES CARDS -->
         <div class="details__cards">
             <div class="details__cards--container" *ngFor="let hero of heroesCardsFiltered">
                 <hero-card [heroCard]="hero"></hero-card>
             </div>
         </div>
+        <!-- endregion -->
     </ng-container>
-
 </div>

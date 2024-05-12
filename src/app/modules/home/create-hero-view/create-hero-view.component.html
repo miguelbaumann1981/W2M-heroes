@@ -1,19 +1,25 @@
 <div class="edit-hero-view">
     <h1 class="edit-hero-view__title">New hero</h1>
-
+    
+    <!-- region CREATE FORM -->
     <form class="edit-hero-view__form" [formGroup]="createHeroForm">
+        <!-- region NAME FIELD -->
         <w2m-input
             [label]="'Name'"
             [placeholder]="'Enter a name'"
             [control]="createHeroForm.controls['name']"
         ></w2m-input>
+        <!-- endregion -->
 
+        <!-- region RACE FIELD -->
         <w2m-input
             [label]="'Race'"
             [placeholder]="'Enter a race'"
             [control]="createHeroForm.controls['race']"
         ></w2m-input>
+        <!-- endregion -->
 
+        <!-- region ACTIONS -->
         <div class="edit-hero-view__form--actions">
             <w2m-default-button
                 [text]="'Save'"
@@ -28,5 +34,7 @@
                 (click)="return()"
             ></w2m-default-button>
         </div>
+         <!-- endregion -->
     </form>
+    <!-- endregion -->
 </div>

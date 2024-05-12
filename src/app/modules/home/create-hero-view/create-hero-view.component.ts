@@ -27,10 +27,18 @@ export class CreateHeroViewComponent implements OnInit {
     });
   }
 
+  /**
+   * Method to generate a random Id to edited heroes
+   * @param min 
+   * @param max 
+   */
   public generateHeroId(min: number, max: number): number {  
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  /**
+   * Method to save hero and add in the previuos list
+   */
   public saveHero(): void {
     const heroSaved: HeroItemList = {
       id: this.generateHeroId(1000, 10000),
@@ -39,12 +47,13 @@ export class CreateHeroViewComponent implements OnInit {
       img: 'assets/img/new-hero.png'
     };
 
-    console.log(heroSaved);
     this.handleEditHeroService.setHeroEdited(heroSaved);
     this.router.navigate([RoutePaths.HOME]);
   }
 
-
+  /**
+   * Method to return to the previuos view
+   */
   public return(): void {
     this.router.navigate([RoutePaths.HOME]);
   }

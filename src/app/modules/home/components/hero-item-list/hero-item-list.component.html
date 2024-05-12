@@ -1,11 +1,15 @@
 <div class="hero-item-list">
+    <!-- region INFO HERO -->
     <div class="hero-item-list__data">
-        <div class="hero-item-list__data--info">
+        <!-- region PERSONAL DATA  -->
+        <div class="hero-item-list__data--info" (click)="seeDetailHeroEvent.emit(heroItem)">
             <img [src]="heroItem.img" [alt]="heroItem.name + 'profile picture'" class="hero-item-list__data--info-img" />
-            <span class="hero-item-list__data--info-name">{{ heroItem.name }}</span>
+            <span class="hero-item-list__data--info-name">{{ heroItem.name | titlecase }}</span>
             <span class="hero-item-list__data--info-race">{{ heroItem.race }}</span>
         </div>
+        <!-- endregion -->
     
+        <!-- region ACTIONS  -->
         <div class="hero-item-list__data--actions">
             <w2m-default-button
                 [text]="'Edit'"
@@ -18,8 +22,11 @@
                 (click)="showConfirmation()"
             ></w2m-default-button>
         </div>
+        <!-- endregion -->
     </div>
+    <!-- endregion -->
 
+    <!-- region CONFIRMATION DELETION -->
     <div *ngIf="isDeleteConfirmEnabled" class="hero-item-list__confirmation">
         <p>Do you want to remove to <span>{{ heroItem.name }}</span>?</p>
         <div>
@@ -27,4 +34,5 @@
             <button mat-button color="warn" (click)="cancel()">Cancel</button>
         </div>
     </div>
+    <!-- endregion -->
 </div>

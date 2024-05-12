@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Hero } from '../shared/interfaces/Hero';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,14 @@ export class HeroesService {
 
   constructor( private http: HttpClient ) { }
 
-  getAllHeroes(): Observable<any[]>{
+  getAllHeroes(): Observable<Hero[]>{
     const url: string = `${this.baseUrl}/all.json`;
-    return this.http.get<any[]>(url);
+    return this.http.get<Hero[]>(url);
   }
 
-  getHeroById(id: string): Observable<any>{
+  getHeroById(id: string): Observable<Hero>{
     const url: string = `${this.baseUrl}/id/${id}.json`;
-    return this.http.get<any[]>(url);
+    return this.http.get<Hero>(url);
   }
   
 

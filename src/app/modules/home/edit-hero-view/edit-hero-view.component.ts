@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { HandleEditHeroService } from 'src/app/services/handle-edit-hero.service';
 import { HeroesService } from 'src/app/services/heroes.service';
 import { RoutePaths } from 'src/app/shared/enums/Routes';
+import { Hero } from 'src/app/shared/interfaces/Hero';
 import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
 
 @Component({
@@ -16,7 +17,6 @@ export class EditHeroViewComponent implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject<void>();
   public editHeroForm: FormGroup;
-  public heroId: string;
   public editedHero: HeroItemList;
 
 
@@ -35,35 +35,43 @@ export class EditHeroViewComponent implements OnInit, OnDestroy {
     });
 
     this.activatedRoute.queryParams.subscribe(params => {
-      console.log(params);
-      this.heroId = params['id'];
-
-      this.heroesService.getHeroById(this.heroId).pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-            console.log(response);
-            this.editedHero = {
-              id: response?.id,
-              name: response?.name,
-              race: response?.appearance?.race,
-              img: response?.images?.xs
-            };
-            console.log(this.editedHero);
-            this.editHeroForm.controls['name'].setValue(this.editedHero.name);
-            this.editHeroForm.controls['race'].setValue(this.editedHero.race);
-          },
-          error: () => {}
-        });
-      });
-      
-
+      this.getHeroByIdFromService(params['id']);
+    });
   }
 
+  /**
+   * Method to get all heroes from API
+   * @param newHero 
+   * @param removeHero 
+   */
+  private getHeroByIdFromService(id: string): void {
+    this.heroesService.getHeroById(id).pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (response: Hero) => {
+        this.editedHero = {
+          id: response?.id,
+          name: response?.name,
+          race: response?.appearance?.race,
+          img: response?.images?.xs
+        };
+        this.editHeroForm.controls['name'].setValue(this.editedHero.name);
+        this.editHeroForm.controls['race'].setValue(this.editedHero.race);
+      }
+    });
+  }
+
+  /**
+   * Method to generate a random Id to edited heroes
+   * @param min 
+   * @param max 
+   */
   public generateHeroId(min: number, max: number): number {  
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
-
+  /**
+   * Method to save hero and change in the previuos list
+   */
   public saveHero(): void {
     const heroSaved: HeroItemList = {
       id: this.generateHeroId(1000, 10000),
@@ -72,12 +80,13 @@ export class EditHeroViewComponent implements OnInit, OnDestroy {
       img: this.editedHero.img
     };
 
-    console.log(heroSaved);
     this.handleEditHeroService.setHeroEdited(heroSaved);
     this.router.navigate([RoutePaths.HOME]);
   }
 
-
+  /**
+   * Method to return to the previuos view
+   */
   public return(): void {
     this.router.navigate([RoutePaths.HOME]);
   }

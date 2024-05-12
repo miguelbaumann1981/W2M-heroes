@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { HeroesService } from 'src/app/services/heroes.service';
+import { Hero } from 'src/app/shared/interfaces/Hero';
 import { HeroItemCard } from 'src/app/shared/interfaces/HeroItemCard';
 
 @Component({
@@ -15,7 +16,6 @@ export class DetailsViewComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject<void>();
   public heroesCards: HeroItemCard[] = [];
   public heroesCardsFiltered: HeroItemCard[] = [];
-  public selectedHero: HeroItemCard;
   public results: number;
   public isSpinnerEnabled: boolean = false;
   public isErrorService: boolean = false;
@@ -23,24 +23,62 @@ export class DetailsViewComponent implements OnInit, OnDestroy {
 
   constructor( 
     private heroesService: HeroesService,
-    private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.getAllHeroesFromService();
-
     this.searchForm = this.formBuilder.group({
       value: ['']
     });
+    this.showHeroFromHomeView();
   }
 
+  /**
+   * Method to show the filtered hero
+   */
+  private showHeroFromHomeView(): void {
+    this.activatedRoute.queryParams.subscribe(params => {
+      if (params !== undefined) {
+        this.heroesCardsFiltered = [];
+        this.heroesService.getHeroById(params['id']).pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response: Hero) => {
+              let singleCardArray: HeroItemCard[] = [];
+              const selectedHero: HeroItemCard = {
+                id: response?.id,
+                name: response?.name,
+                race: response?.appearance?.race ? response?.appearance?.race : 'No race',
+                imgProfile: response?.images?.xs,
+                imgLarge: response?.images?.lg,
+                alias: response?.biography?.fullName ? response?.biography?.fullName : 'No alias',
+                powers: {
+                  intelligence: response?.powerstats?.intelligence,
+                  strength: response?.powerstats?.strength,
+                  speed: response?.powerstats?.speed,
+                  durability: response?.powerstats?.durability,
+                  power: response?.powerstats?.power,
+                  combat: response?.powerstats?.combat,
+                }
+              }
+              singleCardArray.push(selectedHero);
+              this.heroesCardsFiltered = singleCardArray;
+              this.results = singleCardArray.length;
+            }
+          });
+      } 
+    });
+  }
+
+  /**
+   * Method to get all heroes from API
+   */
   private getAllHeroesFromService(): void {
     this.isSpinnerEnabled = true;
     this.heroesService.getAllHeroes().pipe(takeUntil(this.destroy$))
     .subscribe({
-      next: (response) => {
-        console.log(response);
+      next: (response: Hero[]) => {
         this.heroesCards = response.map((item: any) => {
           return {
             id: item?.id,
@@ -60,7 +98,6 @@ export class DetailsViewComponent implements OnInit, OnDestroy {
           }
         });
         this.results = this.heroesCards.length;
-        console.log(this.heroesCards);
 
         if (this.heroesCardsFiltered.length === 0) {
           this.heroesCardsFiltered = this.heroesCards;
@@ -82,6 +119,9 @@ export class DetailsViewComponent implements OnInit, OnDestroy {
       
   }
 
+  /**
+   * Method to do a search over the form
+   */
   public onSearch(): void {
     this.heroesCardsFiltered = [];
     if (this.searchForm.controls['value'].value === '' || this.searchForm.controls['value'].value === undefined) {
@@ -89,19 +129,25 @@ export class DetailsViewComponent implements OnInit, OnDestroy {
     } 
     
     this.heroesCards.map(item => {
-      if ((item.name).includes(this.searchForm.controls['value'].value)) {
+      if ((item.name.toLowerCase()).includes((this.searchForm.controls['value'].value).toLowerCase())) {
         this.heroesCardsFiltered.push(item);
         this.results = this.heroesCardsFiltered.length;
       }
     });
   }
 
+  /**
+   * Method to clear the form search
+   */
   public onClear(): void {
     this.searchForm.reset();
     this.searchForm.controls['value'].setValue('');
     this.onSearch();
   }
 
+  /**
+   * Method to close the notification component
+   */
   public onCloseNotification(): void {
     if (this.isErrorService) {
       this.isErrorService = false;
