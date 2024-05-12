@@ -18,7 +18,6 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   public heroesListFiltered: HeroItemList[] = [];
   public selectedHero: HeroItemList;
   public results: number;
-  public heroStored: HeroItemList;
   public isSpinnerEnabled: boolean = false;
   public isErrorService: boolean = false;
 
@@ -95,7 +94,6 @@ export class HomeViewComponent implements OnInit, OnDestroy {
   }
 
   public onSearch(value: string): void {
-    console.log(value);
     this.heroesListFiltered = [];
     if (value === '' || value === undefined) {
       this.getAllHeroesFromService();
@@ -117,20 +115,18 @@ export class HomeViewComponent implements OnInit, OnDestroy {
     this.handleEditHeroService.setHeroRemoved(hero);
     this.router.navigate([RoutePaths.HOME + '/hero'], 
       {
-        queryParams: 
-          { id: hero?.id }
+        queryParams: { id: hero?.id }
       }
     );
   }
 
-  public removeHeroById(arr, id): void {
-    const objWithIdIndex = arr.findIndex((obj) => obj.id === id);
-    arr.splice(objWithIdIndex, 1);
-    return arr;
+  public removeHeroById(arrayHeroes, idHero: number): void {
+    const index = arrayHeroes.findIndex((obj) => obj.id === idHero);
+    arrayHeroes.splice(index, 1);
+    return arrayHeroes;
   }
 
   public onDeleteHero(hero: HeroItemList): void {
-    console.log(hero);
     this.removeHeroById(this.heroesListFiltered, hero?.id);
     this.results = this.heroesListFiltered.length;
   }

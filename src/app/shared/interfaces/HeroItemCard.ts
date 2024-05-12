@@ -5,10 +5,10 @@ export interface HeroItemCard {
     imgLarge?: string;
     race: string;
     alias?: string;
-    powers?: Power;
+    powers?: Powers;
 }
 
-interface Power {
+interface Powers {
     intelligence?: number;
     strength?: number;
     speed?: number;

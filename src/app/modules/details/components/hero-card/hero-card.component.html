@@ -1,25 +1,44 @@
-<mat-card class="example-card">
+<mat-card class="hero-card">
     <mat-card-header>
       <div mat-card-avatar>
-        <img [src]="heroCard?.imgProfile" [alt]="heroCard?.name + 'photo'">
+        <img [src]="heroCard.imgProfile" [alt]="heroCard.name + 'photo'">
       </div>
-      <mat-card-title>heroCard?.name</mat-card-title>
-      <mat-card-subtitle>heroCard?.alias</mat-card-subtitle>
+      <mat-card-title>{{ heroCard.name }}</mat-card-title>
+      <mat-card-subtitle>{{ heroCard.race }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="heroCard?.imgLarge" [alt]="heroCard?.name + 'photo'">
     <mat-card-content>
+      <h3>{{ heroCard.alias }}</h3>
       <ul>
-        <li>Intelligence: <span>heroCard?.powers?.intelligence</span></li>
-        <li>Strength: <span>heroCard?.powers?.strength</span></li>
-        <li>Speed: <span>heroCard?.powers?.speed</span></li>
-        <li>Durability: <span>heroCard?.powers?.durability</span></li>
-        <li>Power: <span>heroCard?.powers?.power</span></li>
-        <li>Combat: <span>heroCard?.powers?.combat</span></li>
+        <li>
+          <label>Intelligence</label> 
+          <span>{{ heroCard.powers.intelligence }}</span>
+        </li>
+
+        <li>
+          <label>Strength</label> 
+          <span>{{ heroCard.powers.strength }}</span>
+        </li>
+
+        <li>
+          <label>Speed</label> 
+          <span>{{ heroCard.powers.speed }}</span>
+        </li>
+
+        <li>
+          <label>Durability</label> 
+          <span>{{ heroCard.powers?.durability }}</span>
+        </li>
+
+        <li>
+          <label>Power</label> 
+          <span>{{ heroCard.powers.power }}</span>
+        </li>
+
+        <li>
+          <label>Combat</label> 
+          <span>{{ heroCard.powers.combat }}</span>
+        </li>
       </ul>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-  </mat-card>
+</mat-card>
   
