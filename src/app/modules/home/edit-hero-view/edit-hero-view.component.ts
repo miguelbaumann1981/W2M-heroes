@@ -77,7 +77,7 @@ export class EditHeroViewComponent implements OnInit, OnDestroy {
       id: this.generateHeroId(1000, 10000),
       name: this.editHeroForm.controls['name'].value,
       race: this.editHeroForm.controls['race'].value,
-      img: this.editedHero.img
+      img: this.editedHero?.img
     };
 
     this.handleEditHeroService.setHeroEdited(heroSaved);

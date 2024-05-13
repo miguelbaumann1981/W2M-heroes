@@ -1,42 +1,42 @@
 <mat-card class="hero-card">
     <mat-card-header>
       <div mat-card-avatar>
-        <img [src]="heroCard.imgProfile" [alt]="heroCard.name + 'photo'">
+        <img [src]="heroCard?.imgProfile" [alt]="heroCard?.name + 'photo'">
       </div>
-      <mat-card-title>{{ heroCard.name }}</mat-card-title>
-      <mat-card-subtitle>{{ heroCard.race }}</mat-card-subtitle>
+      <mat-card-title>{{ heroCard?.name }}</mat-card-title>
+      <mat-card-subtitle>{{ heroCard?.race }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <h3>{{ heroCard.alias }}</h3>
+      <h3>{{ heroCard?.alias }}</h3>
       <ul>
         <li>
           <label>Intelligence</label> 
-          <span>{{ heroCard.powers.intelligence }}</span>
+          <span>{{ heroCard?.powers?.intelligence }}</span>
         </li>
 
         <li>
           <label>Strength</label> 
-          <span>{{ heroCard.powers.strength }}</span>
+          <span>{{ heroCard?.powers?.strength }}</span>
         </li>
 
         <li>
           <label>Speed</label> 
-          <span>{{ heroCard.powers.speed }}</span>
+          <span>{{ heroCard?.powers?.speed }}</span>
         </li>
 
         <li>
           <label>Durability</label> 
-          <span>{{ heroCard.powers?.durability }}</span>
+          <span>{{ heroCard?.powers?.durability }}</span>
         </li>
 
         <li>
           <label>Power</label> 
-          <span>{{ heroCard.powers.power }}</span>
+          <span>{{ heroCard?.powers?.power }}</span>
         </li>
 
         <li>
           <label>Combat</label> 
-          <span>{{ heroCard.powers.combat }}</span>
+          <span>{{ heroCard?.powers?.combat }}</span>
         </li>
       </ul>
     </mat-card-content>
