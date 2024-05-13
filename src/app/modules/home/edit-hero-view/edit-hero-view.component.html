@@ -4,19 +4,17 @@
     <!-- region EDIT FORM -->
     <form class="edit-hero-view__form" [formGroup]="editHeroForm">
         <!-- region NAME FIELD -->
-        <w2m-input
-            [label]="'Name'"
-            [placeholder]="'Enter a name'"
-            [control]="editHeroForm.controls['name']"
-        ></w2m-input>
+        <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter a name" formControlName="name">
+        </mat-form-field>
         <!-- endregion -->
 
         <!-- region RACE FIELD -->
-        <w2m-input
-            [label]="'Race'"
-            [placeholder]="'Enter a race'"
-            [control]="editHeroForm.controls['race']"
-        ></w2m-input>
+        <mat-form-field appearance="fill">
+            <mat-label>Race</mat-label>
+            <input matInput placeholder="Enter a race" formControlName="race">
+        </mat-form-field>
         <!-- endregion -->
         
         <!-- region ACTIONS -->

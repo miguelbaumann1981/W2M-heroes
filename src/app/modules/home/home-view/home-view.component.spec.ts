@@ -1,10 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HomeViewComponent } from './home-view.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HeroItemList } from 'src/app/shared/interfaces/HeroItemList';
 import { HeroesService } from 'src/app/services/heroes.service';
 import { Hero } from 'src/app/shared/interfaces/Hero';
+import { EditHeroViewComponent } from '@home-module/edit-hero-view/edit-hero-view.component';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Location } from "@angular/common";
+import { DetailsViewComponent } from '@details-module/details-view/details-view.component';
+import { CreateHeroViewComponent } from '@home-module/create-hero-view/create-hero-view.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 const hero: HeroItemList = {
   id: 1,
@@ -12,137 +19,56 @@ const hero: HeroItemList = {
   race: 'bat',
   img: ''
 };
-const newHero: HeroItemList = {
-  id: 2,
-  name: 'Iron',
-  race: 'iron',
-  img: ''
-};
-const removeHero: HeroItemList = {
-  id: 1,
-  name: 'Batman',
-  race: 'bat',
-  img: ''
-};
-const heroesListMock: Hero[] = [
+const heroArray: HeroItemList[] = [
   {
-    "id": 1,
-    "name": "A-Bomb",
-    "slug": "1-a-bomb",
-    "powerstats": {
-      "intelligence": 38,
-      "strength": 100,
-      "speed": 17,
-      "durability": 80,
-      "power": 24,
-      "combat": 64
-    },
-    "appearance": {
-      "gender": "Male",
-      "race": "Human",
-      "height": [
-        "6'8",
-        "203 cm"
-      ],
-      "weight": [
-        "980 lb",
-        "441 kg"
-      ],
-      "eyeColor": "Yellow",
-      "hairColor": "No Hair"
-    },
-    "biography": {
-      "fullName": "Richard Milhouse Jones",
-      "alterEgos": "No alter egos found.",
-      "aliases": [
-        "Rick Jones"
-      ],
-      "placeOfBirth": "Scarsdale, Arizona",
-      "firstAppearance": "Hulk Vol 2 #2 (April, 2008) (as A-Bomb)",
-      "publisher": "Marvel Comics",
-      "alignment": "good"
-    },
-    "work": {
-      "occupation": "Musician, adventurer, author; formerly talk show host",
-      "base": "-"
-    },
-    "connections": {
-      "groupAffiliation": "Hulk Family; Excelsior (sponsor), Avengers (honorary member); formerly partner of the Hulk, Captain America and Captain Marvel; Teen Brigade; ally of Rom",
-      "relatives": "Marlo Chandler-Jones (wife); Polly (aunt); Mrs. Chandler (mother-in-law); Keith Chandler, Ray Chandler, three unidentified others (brothers-in-law); unidentified father (deceased); Jackie Shorr (alleged mother; unconfirmed)"
-    },
-    "images": {
-      "xs": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/xs/1-a-bomb.jpg",
-      "sm": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/sm/1-a-bomb.jpg",
-      "xmd": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/1-a-bomb.jpg",
-      "lg": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/1-a-bomb.jpg"
-    }
+    id: 1,
+    name: 'Batman',
+    race: 'bat',
+    img: ''
+  },
+  {
+    id: 2,
+    name: 'Iron',
+    race: 'iron',
+    img: ''
   }
 ];
-const heroMock: Hero = {
-    "id": 1,
-    "name": "A-Bomb",
-    "slug": "1-a-bomb",
-    "powerstats": {
-      "intelligence": 38,
-      "strength": 100,
-      "speed": 17,
-      "durability": 80,
-      "power": 24,
-      "combat": 64
-    },
-    "appearance": {
-      "gender": "Male",
-      "race": "Human",
-      "height": [
-        "6'8",
-        "203 cm"
-      ],
-      "weight": [
-        "980 lb",
-        "441 kg"
-      ],
-      "eyeColor": "Yellow",
-      "hairColor": "No Hair"
-    },
-    "biography": {
-      "fullName": "Richard Milhouse Jones",
-      "alterEgos": "No alter egos found.",
-      "aliases": [
-        "Rick Jones"
-      ],
-      "placeOfBirth": "Scarsdale, Arizona",
-      "firstAppearance": "Hulk Vol 2 #2 (April, 2008) (as A-Bomb)",
-      "publisher": "Marvel Comics",
-      "alignment": "good"
-    },
-    "work": {
-      "occupation": "Musician, adventurer, author; formerly talk show host",
-      "base": "-"
-    },
-    "connections": {
-      "groupAffiliation": "Hulk Family; Excelsior (sponsor), Avengers (honorary member); formerly partner of the Hulk, Captain America and Captain Marvel; Teen Brigade; ally of Rom",
-      "relatives": "Marlo Chandler-Jones (wife); Polly (aunt); Mrs. Chandler (mother-in-law); Keith Chandler, Ray Chandler, three unidentified others (brothers-in-law); unidentified father (deceased); Jackie Shorr (alleged mother; unconfirmed)"
-    },
-    "images": {
-      "xs": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/xs/1-a-bomb.jpg",
-      "sm": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/sm/1-a-bomb.jpg",
-      "xmd": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/md/1-a-bomb.jpg",
-      "lg": "https://cdn.jsdelivr.net/gh/akabab/superhero-api@0.3.0/api/images/lg/1-a-bomb.jpg"
-    }
-};
+
+const routes = [
+  {
+    path: 'home/hero',
+    component: EditHeroViewComponent
+  },
+  {
+    path: 'details',
+    component: DetailsViewComponent
+  },
+  {
+    path: 'home/createHero',
+    component: CreateHeroViewComponent
+  }
+];
 
 describe('HomeViewComponent', () => {
   let component: HomeViewComponent;
   let fixture: ComponentFixture<HomeViewComponent>;
   let service: HeroesService;
+  let location: Location;
+  let router: Router;
+  let httpMock : HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        HttpClientModule
+        HttpClientModule,
+        HttpClientTestingModule,
+        RouterTestingModule.withRoutes(routes),
       ],
       declarations: [ 
         HomeViewComponent 
+      ],
+      providers: [
+        HeroesService
       ],
       schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
@@ -156,17 +82,81 @@ describe('HomeViewComponent', () => {
     fixture = TestBed.createComponent(HomeViewComponent);
     component = fixture.componentInstance;
     service = TestBed.inject(HeroesService);
+    router = TestBed.get(Router);
+    location = TestBed.get(Location);
+    httpMock = TestBed.inject(HttpTestingController);
+    router.initialNavigation();
     fixture.detectChanges();
   });
 
 
-  it('getAllHeroesFromService methos subscribe a hero', () => {
-    component['getAllHeroesFromService']();
-    service.getAllHeroes().subscribe(response => {
-      expect(response[0].name).toBe('A-Bomb');
-    })
+  it('onEditHero method navigates to Edit view', fakeAsync(() => {
+    const url: string = 'home/hero';
+    router.navigate([url]);
+    component.onEditHero(hero);
+    tick();
+    expect(location.path()).toBe('/home/hero?id=1');
+  }));
+
+  it('createHero method navigates to Create Hero view', fakeAsync(() => {
+    const url: string = 'home/createHero';
+    router.navigate([url]);
+    component.createHero();
+    tick();
+    expect(location.path()).toBe('/home/createHero');
+  }));
+
+  it('seeDetailHero method navigates to Details view', fakeAsync(() => {
+    const url: string = 'details';
+    router.navigate([url]);
+    component.seeDetailHero(hero);
+    tick();
+    expect(location.path()).toBe('/details?id=1');
+  }));
+  
+
+  it('hideNotification method sets notification as a false', fakeAsync(() => {
+    component.isNotificationShown = true;
+    component.hideNotification();
+    tick(3000);
+    expect(component.isNotificationShown).toBeFalse();
+  }));
+
+  it('onCloseNotification method sets error service as a false', () => {
+    component.isErrorService = true;
+    component.onCloseNotification();
+    expect(component.isErrorService).toBeFalse();
   });
 
 
+  it('onDeleteHero method sets the result', () => {
+    component.heroesListFiltered = heroArray;
+    component.onDeleteHero(hero);
+    component.removeHeroById(heroArray, hero.id);
+    expect(component.results).toBe(1);
+    expect(component.notificationText).toBe('The hero has been deleted successfully');
+  });
+
+  it('onEditHero method sets a remove hero', () => {
+    const heroToRemove: HeroItemList = {
+      id: 1,
+      name: 'Hero name',
+      race: 'Hero race',
+      img: ''
+    };
+    component['handleEditHeroService'].setHeroRemoved(heroToRemove);
+    component.onEditHero(heroToRemove);
+    expect(component).toBeTruthy();
+  });
+
+  it('onSearch method returns result', () => {
+    component.heroesListFiltered = [];
+    component.heroesList = heroArray;
+    component.onSearch('Batman');
+    heroArray.map(elem => {
+      component.heroesListFiltered.push(elem);
+      expect(component.results).toBe(1);
+    })
+  });
 
 });

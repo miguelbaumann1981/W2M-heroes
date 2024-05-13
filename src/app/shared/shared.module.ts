@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { W2mInputComponent } from './components/w2m-input/w2m-input.component';
 import { W2mNotificationComponent } from './components/w2m-notification/w2m-notification.component';
 import { W2mDefaultButtonComponent } from './components/w2m-default-button/w2m-default-button.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +11,6 @@ import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
     declarations: [
-      W2mInputComponent,
       W2mNotificationComponent,
       W2mDefaultButtonComponent,
     ],
@@ -27,7 +25,6 @@ import { MatInputModule } from '@angular/material/input';
       ReactiveFormsModule
     ],
     exports: [
-      W2mInputComponent,
       W2mNotificationComponent,
       W2mDefaultButtonComponent,
     ]
