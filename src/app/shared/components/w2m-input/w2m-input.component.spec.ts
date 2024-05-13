@@ -18,6 +18,6 @@ describe('W2mInputComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component.placeholder).toBe('Enter a value');
   });
 });

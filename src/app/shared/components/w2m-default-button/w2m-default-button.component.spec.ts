@@ -18,6 +18,6 @@ describe('W2mDefaultButtonComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component.mode).toBe('primary');
   });
 });

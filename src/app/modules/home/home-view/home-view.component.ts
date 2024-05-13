@@ -63,7 +63,7 @@ export class HomeViewComponent implements OnInit, OnDestroy {
     this.heroesService.getAllHeroes().pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (response: Hero[]) => {
-        this.heroesList = response.map((item: any) => {
+        this.heroesList = response.map((item: Hero) => {
           return {
             id: item?.id,
             name: item?.name,
